@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>实藏 $实藏 · 拥有真实资产，守住你的隐私</title>
+<meta name="description" content="实藏：BNB Chain 上的代币化股票、黄金与国债，一站汇集。屏蔽余额、密封批量交易、零知识证明资格，无需暴露身份。">
+<meta name="theme-color" content="#F6F2E6">
+<meta property="og:title" content="实藏 $实藏 · 拥有真实资产，守住你的隐私">
+<meta name="twitter:site" content="@SafeVaultBNB">
+<meta property="og:description" content="BNB Chain 上的真实世界资产，默认私密。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Serif+SC:wght@600;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F6F2E6; --bg2:#EFE9D8; --card:#FFFDF6; --ink:#16140F; --ink2:#4A463C; --mute:#8A8473;
+  --line:#DCD4BE; --gold:#F0B90B; --gold2:#C8960A; --goldsoft:#FFF3C4; --green:#1E9E5A; --dark:#16140F;
+  --shadow:0 1px 0 rgba(22,20,15,.06),0 12px 32px -12px rgba(22,20,15,.18);
+  --r:18px;
+}
+html[data-theme="dark"]{
+  --bg:#0E0D0A; --bg2:#16140F; --card:#1B1913; --ink:#F6F2E6; --ink2:#C9C2AE; --mute:#8A8473;
+  --line:#2E2B22; --goldsoft:#2A2208; --dark:#000;
+  --shadow:0 1px 0 rgba(255,255,255,.03),0 16px 40px -16px rgba(0,0,0,.7);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Noto Sans SC",system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+.mono{font-family:"JetBrains Mono",monospace;letter-spacing:.04em}
+.serif{font-family:"Noto Serif SC",serif}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+.skip{position:absolute;left:-999px;top:8px;background:var(--gold);color:#111;padding:8px 14px;border-radius:8px;z-index:100}
+.skip:focus{left:8px}
+
+/* announcement */
+.ann{background:var(--dark);color:#F6F2E6;font-size:13px;text-align:center;padding:9px 16px}
+.ann b{color:var(--gold)}
+.ann a{margin-left:10px;border-bottom:1px solid var(--gold);color:var(--gold)}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);margin-right:8px;box-shadow:0 0 0 0 rgba(30,158,90,.6);animation:pulse 2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 8px rgba(30,158,90,0)}100%{box-shadow:0 0 0 0 rgba(30,158,90,0)}}
+
+/* nav */
+nav.top{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+nav.top .wrap{display:flex;align-items:center;gap:28px;height:68px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:900;font-size:20px}
+.logo svg{width:34px;height:34px}
+.logo small{font-family:"JetBrains Mono";font-size:11px;color:var(--mute);font-weight:500;border:1px solid var(--line);padding:1px 7px;border-radius:99px}
+.menu{display:flex;gap:4px;flex:1}
+.menu a{font-size:14.5px;color:var(--ink2);padding:7px 12px;border-radius:10px;transition:.2s}
+.menu a:hover{background:var(--bg2);color:var(--ink)}
+.navr{display:flex;align-items:center;gap:10px}
+.icon-btn{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);display:grid;place-items:center;transition:.2s}
+.icon-btn:hover{border-color:var(--ink)}
+.icon-btn svg{width:17px;height:17px}
+.btn{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:15px;padding:12px 22px;border-radius:14px;transition:.2s}
+.btn-gold{background:var(--gold);color:#16140F;box-shadow:inset 0 -2px 0 rgba(0,0,0,.15)}
+.btn-gold:hover{background:#FFCB2E;transform:translateY(-1px)}
+.btn-dark{background:var(--ink);color:var(--bg)}
+.btn-dark:hover{transform:translateY(-1px)}
+.btn-ghost{border:1px solid var(--line);background:var(--card)}
+.btn-ghost:hover{border-color:var(--ink)}
+.btn-sm{padding:9px 16px;font-size:14px;border-radius:12px}
+
+/* hero */
+.hero{padding:64px 0 40px;position:relative;overflow:hidden}
+.hero .grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+.steps{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px}
+.step{font-family:"JetBrains Mono";font-size:12px;padding:6px 12px;border-radius:99px;border:1px solid var(--line);background:var(--card);color:var(--ink2)}
+.step b{color:var(--gold2);margin-right:6px}
+html[data-theme="dark"] .step b{color:var(--gold)}
+.tag{font-family:"JetBrains Mono";font-size:11px;padding:6px 10px;border-radius:99px;background:var(--ink);color:var(--bg)}
+.tag.g{background:var(--gold);color:#111}
+h1{font-family:"Noto Serif SC",serif;font-weight:900;font-size:clamp(44px,6.4vw,82px);line-height:1.08;letter-spacing:-.01em}
+h1 em{font-style:normal;position:relative;white-space:nowrap}
+h1 em::after{content:"";position:absolute;left:-2%;right:-2%;bottom:.08em;height:.32em;background:var(--gold);z-index:-1;border-radius:4px;transform:skew(-6deg)}
+.lead{font-size:18px;color:var(--ink2);max-width:560px;margin:24px 0 32px}
+.ctas{display:flex;flex-wrap:wrap;gap:12px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:34px}
+.chip{display:flex;align-items:center;gap:7px;font-size:13.5px;padding:7px 13px;border-radius:12px;background:var(--card);border:1px solid var(--line)}
+.chip i{font-style:normal;font-size:10.5px;font-family:"JetBrains Mono";color:var(--mute);border:1px dashed var(--line);padding:0 6px;border-radius:6px}
+.chip.live i{color:var(--green);border-color:var(--green);border-style:solid}
+
+/* vault visual */
+.vault{position:relative;aspect-ratio:1/1;max-width:520px;margin-left:auto;width:100%}
+.vault svg.main{width:100%;height:100%;overflow:visible}
+.orbit{transform-origin:260px 260px;animation:spin 40s linear infinite}
+.orbit.rev{animation-duration:60s;animation-direction:reverse}
+@keyframes spin{to{transform:rotate(360deg)}}
+.float{animation:float 6s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-10px)}}
+.liq{position:absolute;left:0;bottom:6%;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;box-shadow:var(--shadow);min-width:230px}
+.liq .h{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--mute);margin-bottom:8px}
+.liq .bar{height:8px;border-radius:99px;background:var(--bg2);overflow:hidden}
+.liq .bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),#FFD84D);border-radius:99px;animation:fill 3.5s ease-out forwards .6s}
+@keyframes fill{to{width:100%}}
+.liq .t{font-size:13.5px;font-weight:700;margin-top:8px;display:flex;align-items:center;gap:6px}
+.badge-zk{position:absolute;right:2%;top:8%;background:var(--ink);color:var(--bg);border-radius:14px;padding:10px 14px;font-size:12.5px;box-shadow:var(--shadow)}
+.badge-zk b{color:var(--gold);font-family:"JetBrains Mono"}
+
+/* marquee */
+.marq{border-block:1px solid var(--line);background:var(--bg2);overflow:hidden;padding:14px 0;margin-top:40px}
+.marq .track{display:flex;gap:48px;width:max-content;animation:marq 38s linear infinite}
+.marq span{font-family:"Noto Serif SC";font-weight:600;font-size:17px;color:var(--ink2);white-space:nowrap;display:flex;align-items:center;gap:48px}
+.marq span::after{content:"◆";color:var(--gold);font-size:11px}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+/* sections */
+section{padding:110px 0}
+.eyebrow{font-family:"JetBrains Mono";font-size:12px;color:var(--gold2);letter-spacing:.14em;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+html[data-theme="dark"] .eyebrow{color:var(--gold)}
+.eyebrow::before{content:"";width:22px;height:2px;background:currentColor}
+h2{font-family:"Noto Serif SC",serif;font-weight:900;font-size:clamp(34px,4.4vw,56px);line-height:1.15}
+.sub{color:var(--ink2);font-size:17px;max-width:620px;margin-top:16px}
+.shead{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;margin-bottom:52px;flex-wrap:wrap}
+
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:28px;position:relative;transition:.25s;overflow:hidden}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:var(--ink2)}
+.card .ic{width:50px;height:50px;border-radius:14px;background:var(--goldsoft);display:grid;place-items:center;margin-bottom:22px}
+.card .ic svg{width:26px;height:26px;stroke:var(--ink);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.card h3{font-size:21px;font-weight:900;margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.card p{color:var(--ink2);font-size:15px}
+.st{font-family:"JetBrains Mono";font-size:10.5px;font-weight:700;padding:3px 8px;border-radius:7px;background:var(--bg2);color:var(--mute)}
+.st.live{background:rgba(30,158,90,.12);color:var(--green)}
+.card .tech{position:absolute;right:20px;top:24px;font-family:"JetBrains Mono";font-size:11px;color:var(--mute)}
+.card.feat{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.card.feat p{color:color-mix(in srgb,var(--bg) 72%,transparent)}
+.card.feat .ic{background:var(--gold)}
+.card.feat .ic svg{stroke:#111}
+
+/* rwa */
+.rwa{background:var(--dark);color:#F6F2E6;border-radius:32px;margin:0 16px;padding:100px 0;position:relative;overflow:hidden}
+.rwa::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 400px at 85% 40%,rgba(240,185,11,.18),transparent 70%);pointer-events:none}
+.rwa .grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;position:relative}
+.rwa .sub{color:#C9C2AE}
+.rwa .eyebrow{color:var(--gold)}
+.rules{display:flex;flex-direction:column;gap:12px;margin:32px 0 36px}
+.rules div{display:flex;gap:12px;align-items:center;color:#DCD4BE;font-size:15.5px}
+.rules svg{width:20px;height:20px;flex:none;stroke:var(--gold);fill:none;stroke-width:2.2}
+.deck{position:relative;height:430px;outline:none}
+.acard{position:absolute;left:50%;top:50%;width:250px;height:340px;margin:-170px 0 0 -125px;border-radius:22px;padding:22px;display:flex;flex-direction:column;justify-content:space-between;transition:transform .6s cubic-bezier(.2,.8,.2,1);box-shadow:0 30px 60px -20px rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.12)}
+.acard .tk{font-family:"JetBrains Mono";font-weight:700;font-size:24px}
+.acard .cat{font-size:14px;opacity:.75;margin-top:2px}
+.acard .big{font-family:"Noto Serif SC";font-weight:900;font-size:64px;line-height:1;opacity:.95}
+.acard .vo{font-size:11.5px;font-family:"JetBrains Mono";padding:6px 10px;border-radius:9px;background:rgba(0,0,0,.25);display:inline-flex;gap:6px;align-items:center;width:max-content}
+.acard:nth-child(1){background:linear-gradient(150deg,#2C2A22,#16140F);color:#F6F2E6;transform:rotate(-6deg) translate(-14px,6px)}
+.acard:nth-child(2){background:linear-gradient(150deg,#FFD84D,#C8960A);color:#16140F;transform:rotate(-2deg) translate(-4px,2px)}
+.acard:nth-child(3){background:linear-gradient(150deg,#F6F2E6,#DCD4BE);color:#16140F;transform:rotate(2deg) translate(4px,0)}
+.acard:nth-child(4){background:linear-gradient(150deg,#3A3527,#1F1C15);color:#F6F2E6;transform:rotate(6deg) translate(14px,-4px);border-color:rgba(240,185,11,.4)}
+.acard:nth-child(2) .vo,.acard:nth-child(3) .vo{background:rgba(0,0,0,.08)}
+.deck:hover .acard:nth-child(1),.deck:focus-within .acard:nth-child(1),.deck.open .acard:nth-child(1){transform:rotate(-18deg) translate(-210px,40px)}
+.deck:hover .acard:nth-child(2),.deck:focus-within .acard:nth-child(2),.deck.open .acard:nth-child(2){transform:rotate(-6deg) translate(-72px,-6px)}
+.deck:hover .acard:nth-child(3),.deck:focus-within .acard:nth-child(3),.deck.open .acard:nth-child(3){transform:rotate(6deg) translate(72px,-6px)}
+.deck:hover .acard:nth-child(4),.deck:focus-within .acard:nth-child(4),.deck.open .acard:nth-child(4){transform:rotate(18deg) translate(210px,40px)}
+.hint{text-align:center;font-family:"JetBrains Mono";font-size:11.5px;color:#8A8473;margin-top:-8px}
+
+/* why */
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line)}
+.pillar{padding:40px 32px 40px 0;border-right:1px solid var(--line)}
+.pillar+.pillar{padding-left:32px}
+.pillar:last-child{border-right:0}
+.pillar .n{font-family:"JetBrains Mono";color:var(--gold2);font-size:13px;margin-bottom:28px}
+html[data-theme="dark"] .pillar .n{color:var(--gold)}
+.pillar h3{font-family:"Noto Serif SC";font-size:26px;font-weight:900;margin-bottom:14px;line-height:1.3}
+.pillar p{color:var(--ink2);font-size:15.5px}
+.pillar q{display:inline-block;margin-top:18px;font-size:14px;font-weight:700;background:var(--goldsoft);padding:4px 12px;border-radius:8px;quotes:"「" "」"}
+
+/* flow */
+.flow{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;counter-reset:f}
+.fstep{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:30px;position:relative}
+.fstep .big{font-family:"JetBrains Mono";font-weight:700;font-size:48px;color:var(--gold);line-height:1;margin-bottom:18px}
+.fstep h3{font-size:22px;font-weight:900;margin-bottom:8px}
+.fstep p{color:var(--ink2);font-size:15px}
+.fstep:not(:last-child)::after{content:"→";position:absolute;right:-16px;top:50%;transform:translateY(-50%);width:30px;height:30px;border-radius:50%;background:var(--ink);color:var(--bg);display:grid;place-items:center;font-size:14px;z-index:2}
+
+/* token */
+.token{display:grid;grid-template-columns:1fr 1.1fr;gap:20px}
+.tbox{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:36px}
+.tbox.gold{background:var(--gold);border-color:var(--gold);color:#16140F}
+.tk-big{font-family:"Noto Serif SC";font-weight:900;font-size:clamp(56px,7vw,96px);line-height:1}
+.tkrow{display:flex;justify-content:space-between;padding:16px 0;border-bottom:1px solid var(--line);font-size:15px}
+.tkrow:last-child{border-bottom:0}
+.tkrow span:first-child{color:var(--mute)}
+.tkrow span:last-child{font-weight:700;text-align:right}
+.ca{margin-top:28px;background:rgba(0,0,0,.08);border-radius:14px;padding:14px 16px;font-family:"JetBrains Mono";font-size:13px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+
+/* faq */
+.faq{max-width:860px}
+details{border-bottom:1px solid var(--line);padding:22px 0}
+summary{list-style:none;cursor:pointer;font-weight:700;font-size:18px;display:flex;justify-content:space-between;gap:20px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:"JetBrains Mono";font-size:22px;color:var(--gold2);transition:.2s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{color:var(--ink2);margin-top:12px;font-size:15.5px}
+
+/* closing */
+.closing{text-align:center;padding:120px 0}
+.closing .box{background:var(--card);border:1px solid var(--line);border-radius:32px;padding:80px 32px;position:relative;overflow:hidden}
+.closing .box::before{content:"藏";position:absolute;font-family:"Noto Serif SC";font-weight:900;font-size:420px;line-height:1;color:var(--gold);opacity:.08;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none}
+.closing h2{position:relative}
+.closing .ctas{justify-content:center;margin-top:36px;position:relative}
+.closing .sub{margin:16px auto 0;position:relative}
+
+/* footer */
+footer{border-top:1px solid var(--line);padding:64px 0 120px;background:var(--bg2)}
+.fgrid{display:grid;grid-template-columns:1.4fr repeat(5,1fr);gap:28px}
+.fgrid h4{font-size:13px;color:var(--mute);font-weight:500;margin-bottom:14px;font-family:"JetBrains Mono";letter-spacing:.06em}
+.fgrid ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.fgrid li{font-size:14px;color:var(--ink2);display:flex;align-items:center;gap:6px}
+.fgrid li a:hover{color:var(--ink)}
+.fgrid li i{font-style:normal;font-size:9.5px;font-family:"JetBrains Mono";color:var(--mute);border:1px solid var(--line);padding:0 5px;border-radius:5px}
+.fgrid li i.l{color:var(--green);border-color:var(--green)}
+.fbrand p{color:var(--ink2);font-size:14px;margin:14px 0 18px;max-width:260px}
+.fbot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;margin-top:56px;padding-top:24px;border-top:1px solid var(--line);font-size:13px;color:var(--mute)}
+.util{display:flex;gap:10px;align-items:center}
+.pill{border:1px solid var(--line);border-radius:99px;padding:6px 12px;display:flex;align-items:center;gap:7px;background:var(--card);font-size:12.5px;color:var(--ink2)}
+.disc{font-size:12px;color:var(--mute);margin-top:20px;max-width:900px;line-height:1.8}
+
+/* mobile bar */
+.mbar{display:none;position:fixed;bottom:12px;left:12px;right:12px;z-index:60;background:var(--ink);color:var(--bg);border-radius:20px;padding:8px;justify-content:space-around;box-shadow:0 12px 30px rgba(0,0,0,.3)}
+.mbar a{display:flex;flex-direction:column;align-items:center;font-size:11px;gap:3px;padding:6px 10px;border-radius:12px;opacity:.75}
+.mbar a.on{opacity:1;color:var(--gold)}
+.mbar svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8}
+
+/* toast */
+.toast{position:fixed;left:50%;bottom:90px;transform:translate(-50%,20px);background:var(--ink);color:var(--bg);padding:12px 20px;border-radius:14px;font-size:14px;opacity:0;pointer-events:none;transition:.3s;z-index:99;display:flex;gap:8px;align-items:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.toast b{color:var(--gold)}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(24px);transition:opacity .8s,transform .8s}
+.rv.in{opacity:1;transform:none}
+
+@media (max-width:1000px){
+  .menu{display:none}
+  .hero .grid,.rwa .grid,.token{grid-template-columns:1fr}
+  .vault{margin:0 auto;max-width:440px}
+  .cards,.flow{grid-template-columns:1fr 1fr}
+  .pillars{grid-template-columns:1fr}
+  .pillar,.pillar+.pillar{padding:32px 0;border-right:0;border-bottom:1px solid var(--line)}
+  .fgrid{grid-template-columns:1fr 1fr 1fr}
+  .fstep:not(:last-child)::after{display:none}
+}
+@media (max-width:640px){
+  .cards,.flow{grid-template-columns:1fr}
+  .fgrid{grid-template-columns:1fr 1fr}
+  .fbrand{grid-column:1/-1}
+  .mbar{display:flex}
+  .navr .btn-sm{display:none}
+  section{padding:80px 0}
+  .rwa{margin:0 8px;padding:72px 0}
+  .deck{height:380px;transform:scale(.78)}
+  .liq{min-width:190px}
+  .closing .box::before{font-size:260px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}.liq .bar span{width:100%}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">跳至正文</a>
+
+<div class="ann"><span class="dot"></span><b>实藏</b> 现已在 BNB Chain 上线 · 真实资产，默认私密 <a href="#rwa">立即探索 →</a></div>
+
+<nav class="top" aria-label="主导航">
+  <div class="wrap">
+    <a href="#" class="logo" aria-label="实藏 首页">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><rect x="2" y="2" width="36" height="36" rx="11" fill="#16140F"/><path d="M20 8 30 13v7c0 6-4.2 10.4-10 12-5.8-1.6-10-6-10-12v-7z" fill="#F0B90B"/><path d="M15 20h10M20 15v10" stroke="#16140F" stroke-width="2.6" stroke-linecap="round"/></svg>
+      实藏 <small>$实藏</small>
+    </a>
+    <div class="menu">
+      <a href="#rwa">市场</a>
+      <a href="#features">资产篮子</a>
+      <a href="#features">收益</a>
+      <a href="#flow">交易</a>
+      <a href="#features">隐私兑换</a>
+      <a href="#faq">更多</a>
+    </div>
+    <div class="navr">
+      <a class="icon-btn" id="xlink" href="https://x.com/SafeVaultBNB" target="_blank" rel="noopener" aria-label="在 X 上关注"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+      <button class="icon-btn" id="theme" aria-label="切换主题"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      <button class="btn btn-gold btn-sm" data-toast="钱包连接即将开放">连接钱包</button>
+    </div>
+  </div>
+</nav>
+
+<main id="main">
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap grid">
+    <div>
+      <div class="steps rv">
+        <span class="step"><b>01</b>发行</span>
+        <span class="step"><b>02</b>验证</span>
+        <span class="step"><b>03</b>交易</span>
+        <span class="tag g">已上线</span>
+        <span class="tag">BEP-20</span>
+      </div>
+      <h1 class="rv">拥有<em>真实资产</em>，<br>守住你的隐私。</h1>
+      <p class="lead rv">代币化股票、黄金与国债——所有发行方，一站汇集。屏蔽你的余额，在预言机价格下密封批量成交，用零知识证明资格，无需暴露身份。</p>
+      <div class="ctas rv">
+        <a class="btn btn-dark" href="#rwa">探索 RWA 市场 <span>→</span></a>
+        <a class="btn btn-ghost" href="#features">看看你能做什么</a>
+      </div>
+      <div class="chips rv">
+        <span class="chip live">兑换 <i>已上线</i></span>
+        <span class="chip">屏蔽池 <i>即将推出</i></span>
+        <span class="chip">零知识凭证 <i>即将推出</i></span>
+        <span class="chip">暗池 <i>即将推出</i></span>
+        <span class="chip">信贷池 <i>即将推出</i></span>
+      </div>
+    </div>
+
+    <div class="vault rv" aria-hidden="true">
+      <svg class="main" viewBox="0 0 520 520">
+        <defs>
+          <radialGradient id="glow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#F0B90B" stop-opacity=".35"/><stop offset="1" stop-color="#F0B90B" stop-opacity="0"/></radialGradient>
+          <linearGradient id="gd" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE07A"/><stop offset=".55" stop-color="#F0B90B"/><stop offset="1" stop-color="#B8860B"/></linearGradient>
+          <linearGradient id="dk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2E2A20"/><stop offset="1" stop-color="#0E0D0A"/></linearGradient>
+        </defs>
+        <circle cx="260" cy="260" r="250" fill="url(#glow)"/>
+        <circle cx="260" cy="260" r="215" fill="none" stroke="currentColor" stroke-opacity=".14" stroke-dasharray="3 9"/>
+        <circle cx="260" cy="260" r="165" fill="none" stroke="currentColor" stroke-opacity=".12"/>
+        <g class="orbit">
+          <g transform="translate(260 45)"><circle r="30" fill="url(#gd)"/><text y="6" text-anchor="middle" font-family="Noto Serif SC" font-weight="900" font-size="20" fill="#16140F">金</text></g>
+          <g transform="translate(475 260)"><circle r="26" fill="#16140F" stroke="#F0B90B" stroke-width="2"/><text y="5" text-anchor="middle" font-family="JetBrains Mono" font-weight="700" font-size="12" fill="#F0B90B">SPY</text></g>
+          <g transform="translate(260 475)"><circle r="28" fill="#F6F2E6" stroke="#16140F" stroke-width="2"/><text y="6" text-anchor="middle" font-family="Noto Serif SC" font-weight="900" font-size="18" fill="#16140F">债</text></g>
+          <g transform="translate(45 260)"><circle r="24" fill="url(#gd)"/><text y="5" text-anchor="middle" font-family="JetBrains Mono" font-weight="700" font-size="11" fill="#16140F">BNB</text></g>
+        </g>
+        <g class="orbit rev">
+          <g transform="translate(377 143)"><rect x="-20" y="-20" width="40" height="40" rx="10" fill="#16140F"/><path d="M-7 0 -2 5 8 -6" stroke="#F0B90B" stroke-width="3" fill="none" stroke-linecap="round"/></g>
+          <g transform="translate(143 377)"><rect x="-18" y="-18" width="36" height="36" rx="9" fill="#F0B90B"/><text y="5" text-anchor="middle" font-family="JetBrains Mono" font-weight="700" font-size="11" fill="#16140F">ZK</text></g>
+        </g>
+        <g class="float">
+          <!-- vault body -->
+          <rect x="150" y="150" width="220" height="220" rx="36" fill="url(#dk)" stroke="#F0B90B" stroke-opacity=".5" stroke-width="2"/>
+          <rect x="168" y="168" width="184" height="184" rx="26" fill="none" stroke="#F0B90B" stroke-opacity=".25"/>
+          <circle cx="260" cy="260" r="62" fill="url(#gd)"/>
+          <circle cx="260" cy="260" r="48" fill="#16140F"/>
+          <g stroke="#F0B90B" stroke-width="4" stroke-linecap="round">
+            <line x1="260" y1="222" x2="260" y2="236"/><line x1="260" y1="284" x2="260" y2="298"/>
+            <line x1="222" y1="260" x2="236" y2="260"/><line x1="284" y1="260" x2="298" y2="260"/>
+          </g>
+          <text x="260" y="271" text-anchor="middle" font-family="Noto Serif SC" font-weight="900" font-size="30" fill="#F0B90B">藏</text>
+          <rect x="356" y="228" width="14" height="64" rx="7" fill="#F0B90B"/>
+          <g font-family="JetBrains Mono" font-size="9" fill="#F0B90B" fill-opacity=".7">
+            <text x="180" y="190">SHIELDED</text><text x="300" y="350">0x••••••</text>
+          </g>
+        </g>
+      </svg>
+      <div class="badge-zk">零知识证明 · <b>已验证</b> ✓<br><span style="opacity:.6">身份未披露</span></div>
+      <div class="liq">
+        <div class="h"><span>流动性</span><span class="mono">自动注入</span></div>
+        <div class="bar"><span></span></div>
+        <div class="t"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>完成后永久锁定</div>
+      </div>
+    </div>
+  </div>
+  <div class="marq" aria-hidden="true"><div class="track">
+    <span>代币化股票</span><span>实物黄金</span><span>美国国债</span><span>私募信贷</span><span>指数 ETF</span><span>零知识凭证</span><span>暗池撮合</span><span>自托管钱包</span>
+    <span>代币化股票</span><span>实物黄金</span><span>美国国债</span><span>私募信贷</span><span>指数 ETF</span><span>零知识凭证</span><span>暗池撮合</span><span>自托管钱包</span>
+  </div></div>
+</header>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="wrap">
+    <div class="shead rv">
+      <div>
+        <div class="eyebrow">功能 / FEATURES</div>
+        <h2>真实资产，<br>默认私密。</h2>
+      </div>
+      <p class="sub">股票 App 能做的一切，实藏都能做——此外还有可证明的隐私、无法操纵的价格，以及始终由你掌握的私钥。</p>
+    </div>
+    <div class="cards">
+      <article class="card rv">
+        <span class="tech">PLONK</span>
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3 20 7v5c0 5-3.5 8.5-8 9.5C7.5 20.5 4 17 4 12V7z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <h3>屏蔽池 <span class="st">即将推出</span></h3>
+        <p>将资金存入隐私池，随后从任意钱包提取或兑换。只需一份零知识证明即可证明所有权，链上无从追踪。</p>
+      </article>
+      <article class="card rv">
+        <span class="tech">ZK-ID</span>
+        <div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="9" cy="12" r="2.5"/><path d="M14 10h4M14 14h3"/></svg></div>
+        <h3>零知识凭证 <span class="st">即将推出</span></h3>
+        <p>证明你符合投资资格，而无需交出姓名、国籍或生日。合规照常运行，个人信息留在你手里。</p>
+      </article>
+      <article class="card rv">
+        <span class="tech">BATCH</span>
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/><circle cx="18" cy="17" r="2"/></svg></div>
+        <h3>暗池 <span class="st">即将推出</span></h3>
+        <p>订单密封提交、批量撮合，统一按预言机价格结算。没有抢跑，没有夹子，没有人能看到你的单。</p>
+      </article>
+      <article class="card feat rv">
+        <span class="tech" style="color:#8A8473">PANCAKE V2</span>
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M7 4v16M7 20l-3-3M7 20l3-3M17 20V4M17 4l-3 3M17 4l3 3"/></svg></div>
+        <h3>兑换 <span class="st live">已上线</span></h3>
+        <p>按最优资金池路由交易代币化股票，精确授权额度，内置价格保护止损，滑点超限自动拒单。</p>
+      </article>
+      <article class="card rv">
+        <span class="tech">ERC-4626</span>
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M3 20h18M5 20V10M10 20V6M15 20v-8M20 20V4"/></svg></div>
+        <h3>信贷池 <span class="st">即将推出</span></h3>
+        <p>从真实世界的借贷中赚取收益。每笔贷款都在链上可查，金库结构标准透明，随时存取。</p>
+      </article>
+      <article class="card rv">
+        <span class="tech">INDEX</span>
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3 21 8l-9 5-9-5z"/><path d="M3 13l9 5 9-5"/><path d="M3 17.5l9 5 9-5" opacity=".5"/></svg></div>
+        <h3>资产篮子 <span class="st">即将推出</span></h3>
+        <p>指数型代币，由底层股票代币一一支撑。一键买入一篮子资产，也可随时赎回为各个组成部分。</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- RWA -->
+<div class="rwa" id="rwa">
+  <div class="wrap grid">
+    <div class="rv">
+      <div class="eyebrow">真实世界资产 / RWA</div>
+      <h2>拥有真实之物<br>的一份。</h2>
+      <p class="sub">资格要求、转账限制与合规规则，全部写进代币本身。规则跟着资产走，而不是跟着平台走。</p>
+      <div class="rules">
+        <div><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg>每一枚代币都对应发行方托管的底层资产</div>
+        <div><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg>合规检查在链上自动执行，无需人工审核</div>
+        <div><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg>资产始终在你的钱包里，平台无法冻结或挪用</div>
+      </div>
+      <a class="btn btn-gold" href="#flow">探索 RWA →</a>
+    </div>
+    <div class="rv">
+      <div class="deck" id="deck" tabindex="0" aria-label="资产卡组，悬停或聚焦展开">
+        <div class="acard"><div><div class="tk">TBILL</div><div class="cat">美国国债</div></div><div class="big">债</div><span class="vo">🔒 仅限合格投资者</span></div>
+        <div class="acard"><div><div class="tk">GLD</div><div class="cat">大宗商品 · 黄金</div></div><div class="big">金</div><span class="vo">🔒 仅限合格投资者</span></div>
+        <div class="acard"><div><div class="tk">SSCF</div><div class="cat">私募信贷</div></div><div class="big">贷</div><span class="vo">🔒 仅限合格投资者</span></div>
+        <div class="acard"><div><div class="tk">SPY</div><div class="cat">指数 ETF</div></div><div class="big">股</div><span class="vo">🔒 仅限合格投资者</span></div>
+      </div>
+      <p class="hint">悬停 / 点击 展开卡组</p>
+    </div>
+  </div>
+</div>
+
+<!-- WHY -->
+<section id="why">
+  <div class="wrap">
+    <div class="shead rv">
+      <div>
+        <div class="eyebrow">为什么选择实藏 / WHY</div>
+        <h2>为那些会读<br>细则的人而建。</h2>
+      </div>
+    </div>
+    <div class="pillars">
+      <div class="pillar rv">
+        <div class="n">/01</div>
+        <h3>守规矩的隐私</h3>
+        <p>零知识证明让你的身份与余额保持私密，而合规依然在链上照常运行。监管看得到规则被遵守，却看不到你是谁。</p>
+        <q>私密，而非匿名</q>
+      </div>
+      <div class="pillar rv">
+        <div class="n">/02</div>
+        <h3>无人能操纵的价格</h3>
+        <p>暗池交易与预测市场以密封订单提交，统一按预言机价格结算。没有人能提前看到你的意图，也就没有人能针对你。</p>
+        <q>密封订单 · 统一价格</q>
+      </div>
+      <div class="pillar rv">
+        <div class="n">/03</div>
+        <h3>私钥永远在你手里</h3>
+        <p>不托管、不开户。你用自己的钱包签名，任何合约都可以随时退出。实藏只是一组智能合约，从不碰你的资产。</p>
+        <q>不是你的私钥，就不是你的币</q>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FLOW -->
+<section id="flow" style="padding-top:0">
+  <div class="wrap">
+    <div class="shead rv">
+      <div>
+        <div class="eyebrow">如何运作 / HOW IT WORKS</div>
+        <h2>三步，<br>从发行到成交。</h2>
+      </div>
+      <p class="sub">无论你是资产发行方还是普通持有人，流程都一样简单。</p>
+    </div>
+    <div class="flow">
+      <div class="fstep rv"><div class="big">01</div><h3>发行</h3><p>发行方将真实资产代币化为 BEP-20 代币，资格与转账规则直接写入合约。</p></div>
+      <div class="fstep rv"><div class="big">02</div><h3>验证</h3><p>投资者生成一次零知识凭证，证明自己合格——无需上传证件，也不留下个人记录。</p></div>
+      <div class="fstep rv"><div class="big">03</div><h3>交易</h3><p>在 BNB Chain 上即时兑换、屏蔽持仓或进入暗池，手续费低，确认快。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TOKEN -->
+<section id="token" style="padding-top:0">
+  <div class="wrap">
+    <div class="shead rv">
+      <div>
+        <div class="eyebrow">代币 / TOKEN</div>
+        <h2>$实藏</h2>
+      </div>
+      <p class="sub">实藏生态的社区代币，发行于 BNB Chain。</p>
+    </div>
+    <div class="token">
+      <div class="tbox gold rv">
+        <div class="mono" style="font-size:13px;opacity:.7">TICKER</div>
+        <div class="tk-big">$实藏</div>
+        <p style="margin-top:18px;font-size:16px;max-width:380px">拥有真实资产，守住你的隐私。一个代币，连接链上与现实世界。</p>
+        <div class="ca"><span>合约地址：将于 X 官方账号公布</span><a href="https://x.com/SafeVaultBNB" class="xl" target="_blank" rel="noopener" style="font-weight:700;border-bottom:1.5px solid">前往 X →</a></div>
+      </div>
+      <div class="tbox rv">
+        <div class="tkrow"><span>名称</span><span>实藏</span></div>
+        <div class="tkrow"><span>代号</span><span>$实藏</span></div>
+        <div class="tkrow"><span>公链</span><span>BNB Chain (BSC)</span></div>
+        <div class="tkrow"><span>代币标准</span><span>BEP-20</span></div>
+        <div class="tkrow"><span>流动性</span><span>自动注入 · 完成后锁定</span></div>
+        <div class="tkrow"><span>官方渠道</span><span><a href="https://x.com/SafeVaultBNB" class="xl" target="_blank" rel="noopener">X / Twitter</a></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" style="padding-top:0">
+  <div class="wrap">
+    <div class="shead rv"><div><div class="eyebrow">常见问题 / FAQ</div><h2>你可能想问。</h2></div></div>
+    <div class="faq rv">
+      <details><summary>实藏是什么？</summary><p>实藏是一个构建在 BNB Chain 上的真实世界资产（RWA）平台，把代币化股票、黄金、国债与私募信贷汇集到一处，并为它们加上可证明的隐私层。</p></details>
+      <details><summary>"私密，而非匿名"是什么意思？</summary><p>你的身份和余额对外不可见，但你仍然可以用零知识证明向合约证明自己满足资格要求。合规照常执行，只是无需暴露个人信息。</p></details>
+      <details><summary>为什么选择 BNB Chain？</summary><p>BNB Chain 手续费低、出块快、用户基础庞大，非常适合高频的资产兑换与批量结算。</p></details>
+      <details><summary>平台会托管我的资产吗？</summary><p>不会。实藏不托管、不开户，所有操作都由你的钱包签名完成，你可以随时退出任何合约。</p></details>
+      <details><summary>在哪里获取 $实藏 的合约地址？</summary><p>请只以我们的 X 官方账号发布的合约地址为准，谨防仿冒。</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING -->
+<section class="closing" style="padding-top:0">
+  <div class="wrap">
+    <div class="box rv">
+      <div class="eyebrow" style="justify-content:center">市场已开放</div>
+      <h2>市场已开放。<br>带上你的朋友。</h2>
+      <p class="sub">真实资产，私密持有，自主掌控。</p>
+      <div class="ctas">
+        <a class="btn btn-gold" href="#rwa">开始交易 →</a>
+        <a class="btn btn-dark" id="share" href="#" target="_blank" rel="noopener">分享到 X</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div class="fbrand">
+        <a href="#" class="logo"><svg viewBox="0 0 40 40" aria-hidden="true"><rect x="2" y="2" width="36" height="36" rx="11" fill="#16140F"/><path d="M20 8 30 13v7c0 6-4.2 10.4-10 12-5.8-1.6-10-6-10-12v-7z" fill="#F0B90B"/><path d="M15 20h10M20 15v10" stroke="#16140F" stroke-width="2.6" stroke-linecap="round"/></svg>实藏</a>
+        <p>拥有真实资产，守住你的隐私。构建于 BNB Chain。</p>
+        <a class="btn btn-dark btn-sm xl" href="https://x.com/SafeVaultBNB" target="_blank" rel="noopener">在 X 上关注</a>
+      </div>
+      <div><h4>市场</h4><ul>
+        <li><a href="#rwa">全部资产</a></li><li><a href="#rwa">股票</a></li><li><a href="#rwa">ETF 与指数基金</a></li><li><a href="#rwa">大宗商品</a></li><li><a href="#rwa">私募信贷</a></li><li><a href="#rwa">国债</a></li><li>在实藏发行 <i>即将</i></li>
+      </ul></div>
+      <div><h4>篮子与收益</h4><ul>
+        <li>自动篮子 <i>即将</i></li><li>指数篮子 <i>即将</i></li><li>流动性池 <i>即将</i></li><li>金库 <i>即将</i></li><li>借贷 <i>即将</i></li><li>杠杆 <i>即将</i></li>
+      </ul></div>
+      <div><h4>交易</h4><ul>
+        <li><a href="#flow">兑换与跨链</a> <i class="l">上线</i></li><li>隐私兑换 <i>即将</i></li><li>现货与永续 <i>即将</i></li><li>配对交易 <i>即将</i></li><li>屏蔽兑换 <i>即将</i></li><li>暗池 <i>即将</i></li>
+      </ul></div>
+      <div><h4>更多</h4><ul>
+        <li>资产组合 <i class="l">上线</i></li><li>预言机数据 <i class="l">上线</i></li><li>发行 RWA <i>即将</i></li><li>投资者验证 <i>即将</i></li><li>AI 助手 <i>即将</i></li>
+      </ul></div>
+      <div><h4>资源</h4><ul>
+        <li><a href="#faq">文档</a></li><li><a href="#faq">常见问题</a></li><li><a href="#">服务条款</a></li><li><a href="#">隐私政策</a></li><li><a href="#">安全与披露</a></li>
+      </ul></div>
+    </div>
+    <div class="fbot">
+      <span>© 2026 实藏 · $实藏 · 构建于 BNB Chain</span>
+      <div class="util">
+        <span class="pill"><span class="dot" style="margin:0"></span>所有系统正常</span>
+        <span class="pill">🌐 简体中文</span>
+        <button class="pill" id="theme2">◐ 主题</button>
+      </div>
+    </div>
+    <p class="disc">风险提示：加密资产价格波动剧烈，可能导致全部本金损失。本网站内容仅供信息参考，不构成任何投资建议或证券发售要约。标注"即将推出"的功能尚在开发中。请在参与前自行研究（DYOR），并遵守你所在地区的法律法规。</p>
+  </div>
+</footer>
+
+<nav class="mbar" aria-label="移动端导航">
+  <a href="#rwa" class="on"><svg viewBox="0 0 24 24"><path d="M12 3 21 8l-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg>RWA</a>
+  <a href="#features"><svg viewBox="0 0 24 24"><path d="M3 20h18M5 20V10M10 20V6M15 20v-8M20 20V4"/></svg>市场</a>
+  <a href="#why"><svg viewBox="0 0 24 24"><path d="M12 3 20 7v5c0 5-3.5 8.5-8 9.5C7.5 20.5 4 17 4 12V7z"/></svg>隐私</a>
+  <a href="#token"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v8M9 12h6"/></svg>代币</a>
+</nav>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== 在这里填写你的 X 账号链接 =====
+const X_URL = "https://x.com/SafeVaultBNB";
+// ====================================
+document.querySelectorAll('#xlink, .xl').forEach(a => a.href = X_URL);
+const shareText = encodeURIComponent("我在用 实藏 $实藏 —— BNB Chain 上的真实资产，默认私密。拥有真实资产，守住你的隐私。 @SafeVaultBNB");
+document.getElementById('share').href = "https://x.com/intent/tweet?text=" + shareText;
+
+// theme
+const root = document.documentElement;
+try { const t = localStorage.getItem('sc-theme'); if (t) root.dataset.theme = t; } catch(e){}
+function toggle(){ root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark'; try{localStorage.setItem('sc-theme', root.dataset.theme)}catch(e){} }
+document.getElementById('theme').onclick = toggle;
+document.getElementById('theme2').onclick = toggle;
+
+// toast
+const toast = document.getElementById('toast'); let tt;
+function showToast(m){ toast.innerHTML = '<b>●</b> ' + m; toast.classList.add('on'); clearTimeout(tt); tt = setTimeout(()=>toast.classList.remove('on'), 2400); }
+document.querySelectorAll('[data-toast]').forEach(b => b.onclick = () => showToast(b.dataset.toast));
+
+// deck tap toggle (mobile)
+const deck = document.getElementById('deck');
+deck.addEventListener('click', () => deck.classList.toggle('open'));
+
+// reveal
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} }), {threshold:.12});
+document.querySelectorAll('.rv').forEach((el,i) => { el.style.transitionDelay = (i%6)*60 + 'ms'; io.observe(el); });
+
+// mobile bar active
+const mlinks = document.querySelectorAll('.mbar a');
+mlinks.forEach(a => a.addEventListener('click', () => { mlinks.forEach(x=>x.classList.remove('on')); a.classList.add('on'); }));
+</script>
+</body>
+</html>
